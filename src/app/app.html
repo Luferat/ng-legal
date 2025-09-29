@@ -1,48 +1,91 @@
 <!-- src/app/app.html -->
 
 <div class="d-flex flex-column min-vh-100">
+  <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+    <div class="container">
+      <a class="navbar-brand" routerLink="/home">Ng<i class="bi bi-hand-thumbs-up"></i>Legal</a>
 
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-        <div class="container">
-            <a class="navbar-brand" routerLink="/home">Ng<i class="bi bi-hand-thumbs-up"></i>Legal</a>
+      <button
+        class="navbar-toggler d-sm-none"
+        type="button"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#offcanvasNavbar"
+        aria-controls="offcanvasNavbar"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-            <button class="navbar-toggler d-sm-none" type="button" data-bs-toggle="offcanvas"
-                data-bs-target="#offcanvasNavbar" aria-controls="offcanvasNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" routerLink="/home">Início</a></li>
-                    <li class="nav-item"><a class="nav-link" routerLink="/contacts">Contatos</a></li>
-                    <li class="nav-item"><a class="nav-link" routerLink="/about">Sobre</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div class="offcanvas offcanvas-end text-bg-dark d-sm-none" tabindex="-1" id="offcanvasNavbar"
-        aria-labelledby="offcanvasNavbarLabel">
-        <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasNavbarLabel">NG<i class="bi bi-database-fill"></i>CRUD</h5>
-            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas"
-                aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-            <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
-                <li class="nav-item"><a class="nav-link ps-2" routerLink="/home"><i class="bi bi-house-fill pe-2" style="font-size: 1.2rem;"></i>Início</a></li>
-                <li class="nav-item"><a class="nav-link ps-2" routerLink="/contacts"><i class="bi bi-chat-dots-fill pe-2" style="font-size: 1.2rem;"></i>Contatos</a></li>
-                <li class="nav-item"><a class="nav-link ps-2" routerLink="/about"><i class="bi bi-info-circle-fill pe-2" style="font-size: 1.2rem;"></i>Sobre</a></li>
-            </ul>
-        </div>
+      <div class="collapse navbar-collapse" id="collapsibleNavbar">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a
+              class="nav-link text-white"
+              routerLink="/home"
+              routerLinkActive="active"
+              [routerLinkActiveOptions]="{ exact: true }"
+              >Início</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" routerLink="/contacts" routerLinkActive="active"
+              >Contatos</a
+            >
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" routerLink="/about" routerLinkActive="active">Sobre</a>
+          </li>
+        </ul>
+      </div>
     </div>
+  </nav>
 
-    <main class="flex-grow-1 container">
-        <router-outlet></router-outlet>
-    </main>
+  <div
+    class="offcanvas offcanvas-end text-bg-dark d-sm-none"
+    tabindex="-1"
+    id="offcanvasNavbar"
+    aria-labelledby="offcanvasNavbarLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasNavbarLabel">
+        NG<i class="bi bi-database-fill"></i>CRUD
+      </h5>
+      <button
+        type="button"
+        class="btn-close btn-close-white"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+        <li class="nav-item">
+          <a
+            class="nav-link ps-2"
+            routerLink="/home"
+            routerLinkActive="active"
+            [routerLinkActiveOptions]="{ exact: true }"
+            ><i class="bi bi-house-fill pe-2" style="font-size: 1.2rem"></i>Início</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ps-2" routerLink="/contacts" routerLinkActive="active"
+            ><i class="bi bi-chat-dots-fill pe-2" style="font-size: 1.2rem"></i>Contatos</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link ps-2" routerLink="/about" routerLinkActive="active"
+            ><i class="bi bi-info-circle-fill pe-2" style="font-size: 1.2rem"></i>Sobre</a
+          >
+        </li>
+      </ul>
+    </div>
+  </div>
 
-    <footer class="bg-dark text-white text-center p-3 mt-4">
-        <p class="mb-0">&copy; Copyright 2025 Joca da Silva</p>
-    </footer>
+  <main class="flex-grow-1 container">
+    <router-outlet></router-outlet>
+  </main>
 
+  <footer class="bg-dark text-white text-center p-3 mt-4">
+    <p class="mb-0">&copy; Copyright 2025 Joca da Silva</p>
+  </footer>
 </div>
