@@ -21,5 +21,4 @@ a {
 .navbar-nav .nav-item .active {
     /* Exemplo: Muda a cor do texto e adiciona um sublinhado sutil */
     color: var(--bs-warning) !important; /* Cor primária do Bootstrap */
-    border-bottom: 2px solid var(--bs-warning);
 }

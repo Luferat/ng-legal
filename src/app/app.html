@@ -16,7 +16,7 @@
       </button>
 
       <div class="collapse navbar-collapse" id="collapsibleNavbar">
-        <ul class="navbar-nav ms-auto">
+        <ul class="navbar-nav ms-auto align-items-center">
           <li class="nav-item">
             <a
               class="nav-link text-white"
@@ -33,6 +33,19 @@
           </li>
           <li class="nav-item">
             <a class="nav-link text-white" routerLink="/about" routerLinkActive="active">Sobre</a>
+          </li>
+          <li class="nav-item">
+
+              @if (authService.user$ | async; as user) {
+              <a class="nav-link" (click)="confirmLogout()">
+                <img [src]="user.photoURL" class="rounded-circle" width="32" height="32" [alt]="user.displayName" />
+              </a>
+              } @else {
+              <a class="nav-link" (click)="authService.loginWithGoogle()">
+                <i class="bi bi-person-circle" style="font-size: 1.5rem;"></i>
+              </a>
+              }
+
           </li>
         </ul>
       </div>
@@ -77,6 +90,25 @@
             ><i class="bi bi-info-circle-fill pe-2" style="font-size: 1.2rem"></i>Sobre</a
           >
         </li>
+
+<li class="nav-item"><hr></li>
+
+        <li class="nav-item">
+
+          @if (authService.user$ | async; as user) {
+          <a class="nav-link" (click)="confirmLogout()" data-bs-dismiss="offcanvas">
+            <img [src]="user.photoURL" class="rounded-circle me-2" width="32" height="32" [alt]="user.displayName" />
+            <span>{{ user.displayName }}</span>
+          </a>
+          } @else {
+          <a class="nav-link ps-2" (click)="authService.loginWithGoogle()" data-bs-dismiss="offcanvas">
+            <i class="bi bi-person-circle me-2" style="font-size: 1.2rem;"></i>
+            <span>Login</span>
+          </a>
+          }
+
+        </li>
+
       </ul>
     </div>
   </div>
