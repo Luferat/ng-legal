@@ -2,7 +2,8 @@
 
 import { Injectable } from '@angular/core';
 import { Auth, authState, GoogleAuthProvider, signInWithPopup, signOut } from '@angular/fire/auth';
-import { Observable } from 'rxjs';
+import { Firestore, doc, getDoc, setDoc } from '@angular/fire/firestore';
+import { Observable, from, switchMap, map, defer } from 'rxjs';
 import { User } from 'firebase/auth';
 
 @Injectable({
@@ -11,8 +12,43 @@ import { User } from 'firebase/auth';
 export class AuthService{
   public user$: Observable<User | null>;
 
-  constructor(private auth: Auth) {
-    this.user$ = authState(this.auth);
+  constructor(private auth: Auth, private firestore: Firestore) {
+    this.user$ = defer(() => authState(this.auth)).pipe(
+      switchMap(user => {
+        if (!user) {
+          return new Observable<null>(observer => observer.next(null));
+        }
+
+        const userDocRef = doc(this.firestore, 'Users', user.uid);
+        return from(getDoc(userDocRef)).pipe(
+          switchMap(userDoc => {
+            const timestamp = new Date().toISOString();
+            if (!userDoc.exists()) {
+              const userData = {
+                displayName: user.displayName,
+                email: user.email,
+                photoURL: user.photoURL,
+                uid: user.uid,
+                lastLoginAt: timestamp,
+                role: 'user',
+                status: 'ON',
+                createdAt: timestamp
+              };
+              return from(setDoc(userDocRef, userData)).pipe(
+                map(() => user)
+              );
+            } else {
+              const updatedUserData = {
+                lastLoginAt: timestamp
+              };
+              return from(setDoc(userDocRef, updatedUserData, { merge: true })).pipe(
+                map(() => user)
+              );
+            }
+          })
+        );
+      })
+    );
   }
 
   loginWithGoogle() {
