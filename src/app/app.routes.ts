@@ -6,6 +6,7 @@ import { Contacts } from './contacts/contacts';
 import { About } from './about/about';
 import { New } from './new/new';
 import { SeedData } from './seed-data/seed-data';
+import { View } from './view/view';
 
 // Nome do site para compor o `title`
 const siteName = "NgLegal";
@@ -22,6 +23,9 @@ export const routes: Routes = [
 
     // Página "escondida" que adiciona coisas aleatórias ao Firestore
     { path: 'seed-data', component: SeedData, title: `${siteName} - Cadastro de Coisas` },
+
+    // Página de detalhes do thing
+    { path: 'view/:id', component: View, title: `${siteName} - Ver Item` },
 
     // Rota coringa para redirecionar caminhos inválidos ← Sempre a última
     { path: '**', redirectTo: '/home' }

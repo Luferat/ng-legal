@@ -1,8 +1,8 @@
 // src/app/services/data-service.ts
 
 import { Injectable } from '@angular/core';
-import { Firestore, collection, collectionData, query, where, orderBy } from '@angular/fire/firestore';
-import { Observable } from 'rxjs';
+import { Firestore, collection, collectionData, query, where, orderBy, doc, getDoc } from '@angular/fire/firestore';
+import { from, map, Observable } from 'rxjs';
 import { Thing } from '../models/thing.model';
 
 @Injectable({
@@ -54,5 +54,32 @@ export class DataService {
 
     // 3. collectionData agora usa a consulta com o conversor.
     return collectionData<Thing>(thingsQuery);
+  }
+
+   // Novo método para buscar um único item
+  getThingById(id: string): Observable<Thing | null> {
+    const thingConverter = {
+      fromFirestore: (snapshot: any): Thing => {
+        const data = snapshot.data();
+        return {
+          id: snapshot.id,
+          name: data.name,
+          description: data.description,
+          location: data.location,
+          photoURL: data.photoURL,
+          createdAt: data.createdAt,
+          owner: data.owner,
+          status: data.status,
+          metadata: data.metadata,
+        };
+      },
+      toFirestore: (thing: Thing) => ({...thing}) // toFirestore não é usado na busca, mas é obrigatório
+    };
+    const thingRef = doc(this.firestore, 'Things', id).withConverter(thingConverter);
+
+    // Converte a Promise de getDoc em um Observable
+    return from(getDoc(thingRef)).pipe(
+      map(snapshot => snapshot.exists() ? snapshot.data() as Thing : null)
+    );
   }
 }
